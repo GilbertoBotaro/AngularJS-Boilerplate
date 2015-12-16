@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-sm-8">
+        <h3>
+            Books
+        </h3>
+        <article ng-repeat="book in books" class="book row">
+            <div class="col-sm-8">
+                <h2>{{book.post_title}}</h2>
+            </div>
+            <div class="col-sm-4 text-right">
+                <a href="#" ui-sref="book({id:book.ID})" class="btn btn-primary">View</a>
+                <a href="#" ui-sref="book.edit({id:book.ID})" class="btn btn-warning">Edit</a>
+                <a href="#" ng-click="deletePost(book.ID)" class="btn btn-danger">Delete</a>
+            </div>
+        </article>
+    </div>
+    <div class="col-sm-4">
+        <h4>Sidebar</h4>
+        <p>Sidebar for the page for some more stuff!</p>
+    </div>
+</div>
