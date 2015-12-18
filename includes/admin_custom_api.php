@@ -116,7 +116,12 @@ class admin_js_app_api {
 
     function get_book_meta( $object, $field_name, $request ) {
 
-        return get_post_meta( $object['id'] );
+        $return = array(
+            'isbn' => get_post_meta( $object['id'], 'isbn', true ),
+            'price' => get_post_meta( $object['id'], 'price', true )
+        );
+
+        return $return;
 
     }
 
@@ -125,7 +130,7 @@ class admin_js_app_api {
         foreach( $value as $key => $new_value ) {
             update_post_meta( $object->ID, $key, $new_value );
         }
-
+        return;
     }
 
 }

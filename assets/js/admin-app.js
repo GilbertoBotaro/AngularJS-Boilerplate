@@ -45,8 +45,13 @@ admin_js_app.app.factory( 'Books', function( $resource ){
     return $resource( admin_app_local.api_url + 'wp/v2/book/:id', {
         id: '@id'
     },{
+        'query':{
+            method: 'GET',
+            isArray: true,
+            url: admin_app_local.api_url + 'wp/v2/book?filter[posts_per_page]=-1',
+        },
         'update':{
-            method:'PUT',
+            method:'POST',
             headers: {
                 'X-WP-Nonce': admin_app_local.nonce
             }
@@ -100,7 +105,7 @@ admin_js_app.app.controller( 'ListController', ['$scope', '$rootScope', 'Books',
  */
 admin_js_app.app.controller( 'DetailController', ['$scope', '$rootScope', 'Books', '$stateParams', function( $scope, $rootScope, Books, $stateParams ){
 
-    console.log( 'loading detail view...' );
+    console.log( 'loading detail view for ID ' + $stateParams.id );
 
     Books.get({ id: $stateParams.id}, function(res){
         $scope.book = res;
@@ -117,7 +122,6 @@ admin_js_app.app.controller( 'EditController', ['$scope', '$rootScope', 'Books',
 
     Books.get({ id: $stateParams.id}, function(res){
         $scope.book = res;
-        $scope.book.id = res.ID;
 
         if( !$scope.book.meta.isbn )
             $scope.book.meta.isbn = [];
@@ -137,10 +141,8 @@ admin_js_app.app.controller( 'EditController', ['$scope', '$rootScope', 'Books',
         var excerpt = $scope.book.excerpt.rendered;
         $scope.book.excerpt = excerpt;
 
-        console.log( $scope.book );
-
-        Books.save($scope.book, function(res){
-            $scope.book = res.post;
+        Books.update($scope.book, function(res){
+            $scope.book = res;
         });
 
     }

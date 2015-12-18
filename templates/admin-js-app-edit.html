@@ -1,13 +1,8 @@
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
         <h3>
             Editing <span ng-bind-html="book.title.rendered | to_trusted"></span>
         </h3>
-    </div>
-    <div class="col-sm-3 text-right">
-        <a href="#" ui-sref="book({id:book.ID})" class="btn btn-primary">View</a>
-        <span ng-click="savePost()" class="btn btn-success">Save</span>
-        <a href="#" ng-click="deletePost(book.ID)" class="btn btn-danger">Delete</a>
     </div>
 </div>
 <div class="row">
@@ -17,24 +12,37 @@
                 <label for="post_title">
                     Book Title
                 </label>
-                <input id="post_title" ng-model="book.title.rendered" placeholder="Post Title" class="form-control" />
+                <input id="post_title" ng-model="book.title.rendered" placeholder="Book Title" class="form-control" />
             </div>
             <div class="form-group">
                 <label for="post_meta_isbn">
                     Book Meta - ISBN
                 </label>
-                <input id="post_meta_isbn" ng-model="book.meta.isbn" placeholder="Post Title" class="form-control" />
+                <input id="post_meta_isbn" ng-model="book.meta.isbn" placeholder="Book ISBN" class="form-control" />
             </div>
             <div class="form-group">
                 <label for="post_meta_price">
                     Book Meta - Price USD
                 </label>
-                <input id="post_meta_price" ng-model="book.meta.price" placeholder="Post Title" class="form-control" />
+                <input id="post_meta_price" ng-model="book.meta.price" placeholder="Book Price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="book_exc">
+                    Book Excerpt
+                </label>
+                <textarea id="book_exc" ng-model="book.excerpt.rendered" placeholder="Book Excerpt" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="book_desc">
+                    Book Description
+                </label>
+                <textarea id="book_desc" ng-model="book.content.rendered" placeholder="Book Description" class="form-control"></textarea>
             </div>
         </form>
     </div>
     <div class="col-sm-4">
-        <h4>Sidebar</h4>
-        <p>Sidebar for the page for some more stuff!</p>
+        <span ng-click="savePost()" class="btn btn-success btn-block">Save</span>
+        <a href="#" ui-sref="book({id:book.id})" class="btn btn-primary btn-block">View</a>
+        <a href="#" ng-click="deletePost(book.id)" class="btn btn-danger btn-block">Delete</a>
     </div>
 </div>
