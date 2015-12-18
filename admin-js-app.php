@@ -38,9 +38,32 @@ class admin_js_app {
         $this->book_cpt->create_book_content();
     }
 
+    function rest_support() {
+        global $wp_post_types;
+        /*
+         * Add support for custom post types
+         * Add your CPT slugs to the $post_type_names array to add REST support
+         * Docs: http://v2.wp-api.org/extending/custom-content-types/
+         */
+        $post_type_names = ['book'];
+        foreach( $post_type_names as $post_type_name ) {
+            if (isset($wp_post_types[$post_type_name])) {
+                $wp_post_types[$post_type_name]->show_in_rest = true;
+                $wp_post_types[$post_type_name]->rest_base = $post_type_name;
+                $wp_post_types[$post_type_name]->rest_controller_class = 'WP_REST_Posts_Controller';
+            }
+        }
+
+    }
+
     function custom_api() {
         $api = new admin_js_app_api();
         $api->register();
+    }
+
+    function custom_api_fields() {
+        $api = new admin_js_app_api();
+        $api->register_custom_fields();
     }
 
     function admin_menu() {
@@ -64,11 +87,21 @@ $js_app = new admin_js_app();
 add_action( 'init', array( $js_app, 'create_cpt' ) );
 add_action( 'init', array( $js_app, 'create_book_content' ) );
 
+/*
+ * ADD REST Support to Custom Post Type
+ */
+add_action( 'init', array( $js_app, 'rest_support' ) );
 
 /*
  * CUSTOM API: Custom API Endpoints for our app
  */
-add_action( 'rest_api_init', array( $js_app, 'custom_api' ) );
+//add_action( 'rest_api_init', array( $js_app, 'custom_api' ) );
+
+/*
+ * CUSTOM API: Custom API Fields
+ */
+
+add_action( 'rest_api_init', array( $js_app, 'custom_api_fields' ) );
 
 /*
  * ADMIN PAGE: Register and Create the Admin Page

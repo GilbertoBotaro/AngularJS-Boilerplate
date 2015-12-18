@@ -1,8 +1,6 @@
 <div class="row">
     <div class="col-sm-10">
-        <h3>
-            {{book.post_title}}
-        </h3>
+        <h3 ng-bind-html="book.title.rendered | to_trusted"></h3>
     </div>
     <div class="col-sm-2 text-right">
         <a href="#" ui-sref="edit({id:book.ID})" class="btn btn-warning">Edit</a>

@@ -3,7 +3,7 @@
         <h3>
             Books
         </h3>
-        <article ng-repeat="book in books" class="book row">
+        <article ng-repeat="book in books track by $index" class="book row">
             <div class="col-sm-5">
                 <h5>{{book.post_title}}</h5>
             </div>
@@ -13,7 +13,7 @@
             <div class="col-sm-4 text-right">
                 <a href="#" ui-sref="book({id:book.ID})" class="btn btn-primary">View</a>
                 <a href="#" ui-sref="edit({id:book.ID})" class="btn btn-warning">Edit</a>
-                <a href="#" ng-click="deletePost(book.ID)" class="btn btn-danger">Delete</a>
+                <span ng-click="deletePost($index, book.ID)" class="btn btn-danger">Delete</span>
             </div>
         </article>
     </div>

@@ -42,8 +42,33 @@ admin_js_app.app.filter( 'to_trusted', function( $sce ){
  * Book Factory - ties into /wp-json/js-admin-app/books/
  */
 admin_js_app.app.factory( 'Books', function( $resource ){
-    return $resource( admin_app_local.api_url + 'js-admin-app/books/:id', {
+    return $resource( admin_app_local.api_url + 'wp/v2/book/:id', {
         id: '@id'
+    },{
+        'update':{
+            method:'PUT',
+            headers: {
+                'X-WP-Nonce': admin_app_local.nonce
+            }
+        },
+        'post':{
+            method:'POST',
+            headers: {
+                'X-WP-Nonce': admin_app_local.nonce
+            }
+        },
+        'save':{
+            method:'POST',
+            headers: {
+                'X-WP-Nonce': admin_app_local.nonce
+            }
+        },
+        'delete':{
+            method:'DELETE',
+            headers: {
+                'X-WP-Nonce': admin_app_local.nonce
+            }
+        }
     });
 } )
 
@@ -57,6 +82,16 @@ admin_js_app.app.controller( 'ListController', ['$scope', '$rootScope', 'Books',
     Books.query(function(res){
         $scope.books = res;
     })
+
+    $scope.deletePost = function( key, id ) {
+        var conf = confirm( 'Are you sure you want to delete this post?' );
+        if( conf ){
+            Books.delete({id:id}, function(res){
+                if( res.delete )
+                    $scope.books.splice(key, 1);
+            });
+        }
+    }
 
 }]);
 
@@ -83,9 +118,27 @@ admin_js_app.app.controller( 'EditController', ['$scope', '$rootScope', 'Books',
     Books.get({ id: $stateParams.id}, function(res){
         $scope.book = res;
         $scope.book.id = res.ID;
+
+        if( !$scope.book.meta.isbn )
+            $scope.book.meta.isbn = [];
+        if( !$scope.book.meta.price )
+            $scope.book.meta.price = [];
     });
 
     $scope.savePost = function(){
+        /*
+         * Send back appropriate post object
+         * book.content, book.title, book.excerpt
+         */
+        var content = $scope.book.content.rendered;
+        $scope.book.content = content;
+        var title = $scope.book.title.rendered;
+        $scope.book.title = title;
+        var excerpt = $scope.book.excerpt.rendered;
+        $scope.book.excerpt = excerpt;
+
+        console.log( $scope.book );
+
         Books.save($scope.book, function(res){
             $scope.book = res.post;
         });

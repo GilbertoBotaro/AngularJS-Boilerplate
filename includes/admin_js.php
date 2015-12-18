@@ -9,7 +9,8 @@ class admin_js_app_scripts {
         wp_localize_script( 'admin-app', 'admin_app_local',
             array(
                 'api_url' => get_rest_url(),
-                'template_directory' => JS_APP_URL . 'templates'
+                'template_directory' => JS_APP_URL . 'templates',
+                'nonce' => wp_create_nonce( 'wp_rest' ),
             )
         );
     }

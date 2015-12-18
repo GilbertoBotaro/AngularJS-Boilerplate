@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-9">
         <h3>
-            Editing {{book.post_title}}
+            Editing <span ng-bind-html="book.title.rendered | to_trusted"></span>
         </h3>
     </div>
     <div class="col-sm-3 text-right">
@@ -17,25 +17,19 @@
                 <label for="post_title">
                     Book Title
                 </label>
-                <input id="post_title" ng-model="book.post_title" placeholder="Post Title" class="form-control" />
+                <input id="post_title" ng-model="book.title.rendered" placeholder="Post Title" class="form-control" />
             </div>
             <div class="form-group">
-                <label for="post_title">
-                    Book Taxonomy
-                </label>
-                <input id="post_title" ng-model="book.post_title" placeholder="Post Title" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="post_title">
+                <label for="post_meta_isbn">
                     Book Meta - ISBN
                 </label>
-                <input id="post_title" ng-model="book.meta.isbn[0]" placeholder="Post Title" class="form-control" />
+                <input id="post_meta_isbn" ng-model="book.meta.isbn" placeholder="Post Title" class="form-control" />
             </div>
             <div class="form-group">
-                <label for="post_title">
+                <label for="post_meta_price">
                     Book Meta - Price USD
                 </label>
-                <input id="post_title" ng-model="book.meta.price[0]" placeholder="Post Title" class="form-control" />
+                <input id="post_meta_price" ng-model="book.meta.price" placeholder="Post Title" class="form-control" />
             </div>
         </form>
     </div>

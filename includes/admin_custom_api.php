@@ -15,6 +15,10 @@ class admin_js_app_api {
             'methods'  => 'POST',
             'callback' => array( $this, 'save_book' )
         ));
+        register_rest_route( 'js-admin-app', '/books/(?P<id>\d+)', array(
+            'methods'  => 'DELETE',
+            'callback' => array( $this, 'delete_book' )
+        ));
     }
 
     function get_books( $data ) {
@@ -81,6 +85,47 @@ class admin_js_app_api {
         $book['post']->meta = get_post_meta( $post['ID'] );
 
         return new WP_REST_Response( $book, 200 );
+    }
+
+    function delete_book( $data ) {
+
+        $post_id = $data['id'];
+        $delete = wp_delete_post( $post_id, true );
+
+        if( $delete !== false ) {
+            $book = array( 'post_id' => $data['id'] , 'delete' => true );
+            return new WP_REST_Response( $book, 200 );
+        } else {
+            return new WP_Error( 'delete_error', __( 'Error Deleting Post' . $data['id'], 'js-app-plugin' ) );
+        }
+
+    }
+
+    function register_custom_fields() {
+
+        register_api_field( 'book',
+            'meta',
+            array(
+                'get_callback'    => array( $this, 'get_book_meta' ),
+                'update_callback' => array( $this, 'update_book_meta' ),
+                'schema'          => null,
+            )
+        );
+
+    }
+
+    function get_book_meta( $object, $field_name, $request ) {
+
+        return get_post_meta( $object['id'] );
+
+    }
+
+    function update_book_meta( $value, $object, $field_name ) {
+
+        foreach( $value as $key => $new_value ) {
+            update_post_meta( $object->ID, $key, $new_value );
+        }
+
     }
 
 }
