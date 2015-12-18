@@ -340,12 +340,21 @@ admin_js_app.app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: admin_app_local.template_directory + '/admin-js-app-detail.html',
             controller: 'DetailController'
         })
-        .state('book.edit', {
-            url: 'book/:id/edit',
+        .state('edit', {
+            url: '/book/:id/edit',
             templateUrl: admin_app_local.template_directory + '/admin-js-app-edit.html',
             controller: 'EditController'
         })
 });
+/*
+ * Filter to trust HTML
+*/
+admin_js_app.app.filter( 'to_trusted', function( $sce ){
+    return function( text ){
+        return $sce.trustAsHtml( text );
+    }
+});
+
 
 /*
  * Book Factory - ties into /wp-json/js-admin-app/books/
@@ -391,6 +400,14 @@ admin_js_app.app.controller( 'EditController', ['$scope', '$rootScope', 'Books',
 
     Books.get({ id: $stateParams.id}, function(res){
         $scope.book = res;
-    })
+        $scope.book.id = res.ID;
+    });
+
+    $scope.savePost = function(){
+        Books.save($scope.book, function(res){
+            $scope.book = res.post;
+        });
+
+    }
 
 }]);

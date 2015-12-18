@@ -1,18 +1,43 @@
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-9">
         <h3>
-            Books
+            Editing {{book.post_title}}
         </h3>
-        <article ng-repeat="book in books" class="book row">
-            <div class="col-sm-8">
-                <h2>{{book.post_title}}</h2>
+    </div>
+    <div class="col-sm-3 text-right">
+        <a href="#" ui-sref="book({id:book.ID})" class="btn btn-primary">View</a>
+        <span ng-click="savePost()" class="btn btn-success">Save</span>
+        <a href="#" ng-click="deletePost(book.ID)" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-8">
+        <form ng-submit="savePost()">
+            <div class="form-group">
+                <label for="post_title">
+                    Book Title
+                </label>
+                <input id="post_title" ng-model="book.post_title" placeholder="Post Title" class="form-control" />
             </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" ui-sref="book({id:book.ID})" class="btn btn-primary">View</a>
-                <a href="#" ui-sref="book.edit({id:book.ID})" class="btn btn-warning">Edit</a>
-                <a href="#" ng-click="deletePost(book.ID)" class="btn btn-danger">Delete</a>
+            <div class="form-group">
+                <label for="post_title">
+                    Book Taxonomy
+                </label>
+                <input id="post_title" ng-model="book.post_title" placeholder="Post Title" class="form-control" />
             </div>
-        </article>
+            <div class="form-group">
+                <label for="post_title">
+                    Book Meta - ISBN
+                </label>
+                <input id="post_title" ng-model="book.meta.isbn[0]" placeholder="Post Title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="post_title">
+                    Book Meta - Price USD
+                </label>
+                <input id="post_title" ng-model="book.meta.price[0]" placeholder="Post Title" class="form-control" />
+            </div>
+        </form>
     </div>
     <div class="col-sm-4">
         <h4>Sidebar</h4>

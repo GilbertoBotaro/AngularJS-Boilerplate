@@ -23,4 +23,9 @@ gulp.task( 'js', function(){
         .pipe(gulp.dest('build/js/'))
 });
 
-gulp.task( 'default', ['sass', 'js'] );
+gulp.task( 'watch', function(){
+    gulp.watch('./assets/scss/styles.scss', ['sass'] );
+    gulp.watch(jsFileList, ['js'] );
+})
+
+gulp.task( 'default', ['sass', 'js', 'watch'] );
