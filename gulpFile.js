@@ -12,6 +12,7 @@ var jsFileList = [
 
 gulp.task( 'sass', function() {
     gulp.src('./assets/scss/styles.scss')
+        .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./build/css'));
