@@ -71,7 +71,9 @@ class admin_js_app {
         $menu->register_menu();
     }
 
-    function admin_scripts() {
+    function admin_scripts( $hook ) {
+        if( $hook !== 'toplevel_page_admin-js-app' )
+            return;
         $scripts = new admin_js_app_scripts();
         $scripts->load_scripts();
     }
@@ -112,6 +114,7 @@ add_action( 'admin_menu', array( $js_app, 'admin_menu' ) );
  * ADMIN APP: Enqueue JavaScript for application
  */
 add_action( 'admin_enqueue_scripts', array( $js_app, 'admin_scripts' ) );
+
 
 
 ?>
