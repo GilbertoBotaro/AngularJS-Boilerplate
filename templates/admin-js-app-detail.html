@@ -8,10 +8,14 @@
         <div ng-bind-html="book.content.rendered | to_trusted"></div>
         <h4>Excerpt</h4>
         <div ng-bind-html="book.excerpt.rendered | to_trusted"></div>
-        <h4>ISBN</h4>
-        <p>{{book.meta.isbn}}</p>
-        <h4>Price USD</h4>
-        <p>${{book.meta.price}}</p>
+        <div ng-if="book.meta.isbn">
+            <h4>ISBN</h4>
+            <p>{{book.meta.isbn}}</p>
+        </div>
+        <div ng-if="book.meta.price">
+            <h4>Price USD</h4>
+            <p>${{book.meta.price}}</p>
+        </div>
     </div>
     <div class="col-sm-2">
         <a href="#" ui-sref="edit({id:book.id})" class="btn btn-warning btn-block">Edit</a>
