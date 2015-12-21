@@ -3,7 +3,7 @@
  Right now this is a standalone __WordPress__ plugin.
 
 ##AngularJS
-The main repo will be AngularJS, I will then fork or branch to create a ReactJS version and other version based on demand
+This repo is the AngularJS version of the boilerplate, check out the [organization](https://github.com/WordPress-Admin-JavaScript-Boilerplate) for other versions
 
 ##Installation
 * Clone Repo into `wp-content/plugins`
