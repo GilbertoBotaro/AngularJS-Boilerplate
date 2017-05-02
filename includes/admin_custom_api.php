@@ -103,7 +103,7 @@ class admin_js_app_api {
 
     function register_custom_fields() {
 
-        register_api_field( 'book',
+        register_rest_field( 'book',
             'meta',
             array(
                 'get_callback'    => array( $this, 'get_book_meta' ),
